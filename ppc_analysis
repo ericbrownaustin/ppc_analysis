@@ -1,0 +1,137 @@
+-- 1. Union data query
+
+SELECT 
+  day,
+  CASE WHEN REGEXP_CONTAINS(adset_name,'ManchesterUnited') THEN 'ManchesterUnited'
+WHEN REGEXP_CONTAINS(adset_name,'ManchesterCity') THEN 'ManchesterCity'
+WHEN REGEXP_CONTAINS(adset_name,'Tottenham') THEN 'Tottenham'
+WHEN REGEXP_CONTAINS(adset_name,'Liverpool') THEN 'Liverpool'
+WHEN REGEXP_CONTAINS(adset_name,'Nottingham') THEN 'Nottingham'
+WHEN REGEXP_CONTAINS(adset_name,'Arsenal') THEN 'Arsenal'
+WHEN REGEXP_CONTAINS(adset_name,'Chelsea') THEN 'Chelsea'
+WHEN REGEXP_CONTAINS(adset_name,'Newcastle') THEN 'Newcastle'
+WHEN REGEXP_CONTAINS(adset_name,'Leeds') THEN 'Leads'
+WHEN REGEXP_CONTAINS(adset_name,'StLouisCardinals') THEN 'StLouisCardinals'
+WHEN REGEXP_CONTAINS(adset_name,'Hull') THEN 'Hull'
+WHEN REGEXP_CONTAINS(adset_name,'Everton') THEN 'Everton'
+WHEN REGEXP_CONTAINS(adset_name,'OhioState') THEN 'OhioState'
+WHEN REGEXP_CONTAINS(adset_name,'Tottenham') THEN 'Tottenham'
+WHEN REGEXP_CONTAINS(adset_name,'BayernMunich') THEN 'BayernMunich'
+WHEN REGEXP_CONTAINS(adset_name,'MontrealCanadiens') THEN 'MontrealCanadiens'
+WHEN REGEXP_CONTAINS(adset_name,'Middlesbrough') THEN 'Middlesbrough'
+WHEN REGEXP_CONTAINS(adset_name,'AstonVilla') THEN 'AstonVilla'
+WHEN REGEXP_CONTAINS(adset_name,'PSG') THEN 'PSG'
+WHEN REGEXP_CONTAINS(adset_name,'Vancouver') THEN 'Vancouver'
+WHEN REGEXP_CONTAINS(adset_name,'Birmingham') THEN 'BirminghamCity'
+WHEN REGEXP_CONTAINS(adset_name,'Bolton') THEN 'Bolton'
+WHEN REGEXP_CONTAINS(adset_name,'QueensPark') THEN 'QueensPark'
+WHEN REGEXP_CONTAINS(adset_name,'RealMadrid') THEN 'RealMadrid'
+WHEN REGEXP_CONTAINS(adset_name,'Alabama') THEN 'Alabama'
+WHEN REGEXP_CONTAINS(adset_name,'Carolina') THEN 'CarolinaPanthers'
+WHEN REGEXP_CONTAINS(adset_name,'ColumbusBlue') THEN 'ColumbusBlueJackets'
+WHEN REGEXP_CONTAINS(adset_name,'DetroitRed') THEN 'DetroitRedWings'
+WHEN REGEXP_CONTAINS(adset_name,'DetroitTigers') THEN 'DetroitTigers'
+WHEN REGEXP_CONTAINS(adset_name,'GoldenState') THEN 'GoldenState'
+WHEN REGEXP_CONTAINS(adset_name,'Tennessee') THEN 'Tennessee'
+WHEN REGEXP_CONTAINS(adset_name,'CrystalPalace') THEN 'CrystalPalace'
+WHEN REGEXP_CONTAINS(adset_name,'RealMadrid') THEN 'RealMadrid'
+WHEN REGEXP_CONTAINS(adset_name,'Wales') THEN 'Wales'
+END AS team,
+  'facebook' AS engine,
+  campaign_country,
+  campaign_name,
+  campaign_id,
+  adset_name,
+  adset_id,
+  league_name,
+  spend,
+  impressions,
+  clicks,
+  conversions,
+  lifetime_value
+FROM `eb-project-392023.sandbox.facebook`
+UNION ALL
+SELECT 
+  day,
+  NULL AS team,
+  'twitter' AS engine,
+  campaign_country,
+  campaign_name,
+  NULL AS campaign_id,
+  adset_name,
+  adset_id,
+  NULL AS league_name,
+  spend,
+  impressions,
+  clicks,
+  conversions,
+  lifetime_value
+FROM `eb-project-392023.sandbox.twitter`
+
+-- 2. Facebook Teams
+
+WITH dat AS (
+SELECT
+  day,
+  CASE
+    WHEN REGEXP_CONTAINS(adset_name,'ManchesterUnited') THEN 'ManchesterUnited'
+    WHEN REGEXP_CONTAINS(adset_name,'ManchesterCity') THEN 'ManchesterCity'
+    WHEN REGEXP_CONTAINS(adset_name,'Tottenham') THEN 'Tottenham'
+    WHEN REGEXP_CONTAINS(adset_name,'Liverpool') THEN 'Liverpool'
+    WHEN REGEXP_CONTAINS(adset_name,'Nottingham') THEN 'Nottingham'
+    WHEN REGEXP_CONTAINS(adset_name,'Arsenal') THEN 'Arsenal'
+    WHEN REGEXP_CONTAINS(adset_name,'Chelsea') THEN 'Chelsea'
+    WHEN REGEXP_CONTAINS(adset_name,'Newcastle') THEN 'Newcastle'
+    WHEN REGEXP_CONTAINS(adset_name,'Leeds') THEN 'Leads'
+    WHEN REGEXP_CONTAINS(adset_name,'StLouisCardinals') THEN 'StLouisCardinals'
+    WHEN REGEXP_CONTAINS(adset_name,'Hull') THEN 'Hull'
+    WHEN REGEXP_CONTAINS(adset_name,'Everton') THEN 'Everton'
+    WHEN REGEXP_CONTAINS(adset_name,'OhioState') THEN 'OhioState'
+    WHEN REGEXP_CONTAINS(adset_name,'Tottenham') THEN 'Tottenham'
+    WHEN REGEXP_CONTAINS(adset_name,'BayernMunich') THEN 'BayernMunich'
+    WHEN REGEXP_CONTAINS(adset_name,'MontrealCanadiens') THEN 'MontrealCanadiens'
+    WHEN REGEXP_CONTAINS(adset_name,'Middlesbrough') THEN 'Middlesbrough'
+    WHEN REGEXP_CONTAINS(adset_name,'AstonVilla') THEN 'AstonVilla'
+    WHEN REGEXP_CONTAINS(adset_name,'PSG') THEN 'PSG'
+    WHEN REGEXP_CONTAINS(adset_name,'Vancouver') THEN 'Vancouver'
+    WHEN REGEXP_CONTAINS(adset_name,'Birmingham') THEN 'BirminghamCity'
+    WHEN REGEXP_CONTAINS(adset_name,'Bolton') THEN 'Bolton'
+    WHEN REGEXP_CONTAINS(adset_name,'QueensPark') THEN 'QueensPark'
+    WHEN REGEXP_CONTAINS(adset_name,'RealMadrid') THEN 'RealMadrid'
+    WHEN REGEXP_CONTAINS(adset_name,'Alabama') THEN 'Alabama'
+    WHEN REGEXP_CONTAINS(adset_name,'Carolina') THEN 'CarolinaPanthers'
+    WHEN REGEXP_CONTAINS(adset_name,'ColumbusBlue') THEN 'ColumbusBlueJackets'
+    WHEN REGEXP_CONTAINS(adset_name,'DetroitRed') THEN 'DetroitRedWings'
+    WHEN REGEXP_CONTAINS(adset_name,'DetroitTigers') THEN 'DetroitTigers'
+    WHEN REGEXP_CONTAINS(adset_name,'GoldenState') THEN 'GoldenState'
+    WHEN REGEXP_CONTAINS(adset_name,'Tennessee') THEN 'Tennessee'
+    WHEN REGEXP_CONTAINS(adset_name,'CrystalPalace') THEN 'CrystalPalace'
+    WHEN REGEXP_CONTAINS(adset_name,'RealMadrid') THEN 'RealMadrid'
+    WHEN REGEXP_CONTAINS(adset_name,'Wales') THEN 'Wales'
+END
+  AS team,
+  'facebook' AS engine,
+  campaign_country,
+  campaign_name,
+  campaign_id,
+  adset_name,
+  adset_id,
+  league_name,
+  spend,
+  impressions,
+  clicks,
+  conversions,
+  lifetime_value
+FROM
+  `eb-project-392023.sandbox.facebook`)
+
+  SELECT
+    team,
+    SUM(spend) AS spend,
+    SUM(impressions) AS impressions,
+    SUM(lifetime_value) AS ltv
+FROM
+  dat
+WHERE team IS NOT NULL
+GROUP BY team
+ORDER BY spend DESC
